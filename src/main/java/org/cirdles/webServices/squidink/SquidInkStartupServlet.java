@@ -9,11 +9,14 @@ import org.cirdles.webServices.requestUtils.JSONUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.lang.Runtime;
+import java.lang.Process;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.*;
@@ -48,18 +51,18 @@ public class SquidInkStartupServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
 
-        try{
+
             System.out.println(response);
-            response.getWriter().println("We hit this!");
-        } catch(IOException e){
-            e.printStackTrace();
-        }
-
-        response.addHeader("Access-Control-Allow-Origin", "*");
         Process process = Runtime.getRuntime()
-                .exec("docker run -p 81:8080 squidboys");
-
+                .exec("docker run -p 8081:8080 squidboys");
+        response.getWriter().println(process.isAlive());
+        }
+        catch (IOException | NullPointerException | SecurityException | IllegalArgumentException e) {
+            System.out.println(e);
+            response.getWriter().println(e);
+        }
 
     }
 

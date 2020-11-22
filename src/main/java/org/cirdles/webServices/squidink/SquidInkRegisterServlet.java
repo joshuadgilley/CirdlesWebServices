@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package org.cirdles.webServices.squidink;
+import java.nio.file.Files;
 import java.sql.*;
 
 import org.apache.commons.io.IOUtils;
@@ -14,6 +15,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.nio.file.Paths;
+import java.nio.file.Path;
 import javax.sql.RowSet;
 
 import org.cirdles.webServices.requestUtils.*;
@@ -77,6 +80,8 @@ public class SquidInkRegisterServlet extends HttpServlet {
                 input.setString(1, holder2[3]);
                 input.setString(2, holder2[1]);
                 input.setString(3, holder2[5]);
+                Path path = Paths.get("C:/Users/Richard McCarty/Downloads/CirdlesWeb/" + holder2[3].replace(" ", ""));
+                Files.createDirectory(path);
                 input.execute();
                 connection.close();
                 response.setContentType("application/json");
@@ -90,7 +95,7 @@ public class SquidInkRegisterServlet extends HttpServlet {
             //json = JSONUtils.createResponseErrorJSON("Invalid URI");
 
         }
-        catch(SQLException | ClassNotFoundException e) {
+        catch(SQLException | ClassNotFoundException | IOException e) {
             System.err.println(e.getMessage());
             response.getWriter().println(e.getMessage());
         }

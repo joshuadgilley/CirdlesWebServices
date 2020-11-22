@@ -56,7 +56,7 @@ public class SquidInkStartupServlet extends HttpServlet {
 
             System.out.println(response);
         Process process = Runtime.getRuntime()
-                .exec("docker run -p 8081:8080 squidboys");
+                .exec("docker run -p 81:8080 squidboys");
         response.getWriter().println(process.isAlive());
         }
         catch (IOException | NullPointerException | SecurityException | IllegalArgumentException e) {
